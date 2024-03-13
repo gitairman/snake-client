@@ -13,10 +13,10 @@ let speed = 1;
 let currDir = null;
 
 const actions = {
-  [MOVE_UP_KEY]: (data) => handleDirChange(data, 's', 'Move: up'),
-  [MOVE_DOWN_KEY]: (data) => handleDirChange(data, 'w', 'Move: down'),
-  [MOVE_LEFT_KEY]: (data) => handleDirChange(data, 'd', 'Move: left'),
-  [MOVE_RIGHT_KEY]: (data) => handleDirChange(data, 'a', 'Move: right'),
+  [MOVE_UP_KEY]: (data) => handleDirChange(data, 's', 'up'),
+  [MOVE_DOWN_KEY]: (data) => handleDirChange(data, 'w', 'down'),
+  [MOVE_LEFT_KEY]: (data) => handleDirChange(data, 'd', 'left'),
+  [MOVE_RIGHT_KEY]: (data) => handleDirChange(data, 'a', 'right'),
 };
 
 const msgs = {
@@ -36,7 +36,7 @@ const msgs = {
 const handleDirChange = (newDir, oppDir, command) => {
   if (newDir === currDir || currDir === oppDir) return;
   currDir = newDir;
-  moveDir = () => connection.write(command);
+  moveDir = () => connection.write('Move: ' + command);
   move();
 };
 
