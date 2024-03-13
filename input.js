@@ -1,3 +1,10 @@
+const {
+  MOVE_UP_KEY,
+  MOVE_DOWN_KEY,
+  MOVE_LEFT_KEY,
+  MOVE_RIGHT_KEY,
+} = require('./constants');
+
 // Stores the active TCP connection object.
 let connection;
 let intervalId = null;
@@ -5,48 +12,49 @@ let moveDir;
 let speed = 1;
 let currDir = null;
 
+const handleDirChange = (newDir, oppDir, command) => {
+  if (newDir === currDir || currDir === oppDir) return;
+  currDir = newDir;
+  moveDir = () => connection.write(command);
+  move();
+};
+
+const move = (newSpeed = speed) => {
+  if (intervalId !== null && speed === newSpeed) return;
+  if (intervalId !== null) clearInterval(intervalId);
+  if (speed !== newSpeed) speed = newSpeed;
+
+  const delay = Math.floor(200 / speed);
+  intervalId = setInterval(() => moveDir(), delay);
+};
+
 const handleUserInput = function (data) {
   console.log(data, '\r');
 
-  const move = (newSpeed = speed) => {
-    if (intervalId !== null && speed === newSpeed) return;
-    if (intervalId !== null) clearInterval(intervalId);
-    if (speed !== newSpeed) speed = newSpeed;
-
-    const delay = Math.floor(200 / speed);
-    intervalId = setInterval(() => moveDir(), delay);
-  };
-
-  if (data === 'w') {
-    if (data === currDir || currDir === 's') return;
-    currDir = data;
-    moveDir = () => connection.write('Move: up');
-    move();
+  if (data === MOVE_UP_KEY) {
+    handleDirChange(data, 's', 'Move: up');
   }
-  if (data === 'a') {
-    if (data === currDir || currDir === 'd') return;
-    currDir = data;
-    moveDir = () => connection.write('Move: left');
-    move();
+  if (data === MOVE_LEFT_KEY) {
+    handleDirChange(data, 'd', 'Move: left');
   }
-  if (data === 's') {
-    if (data === currDir || currDir === 'w') return;
-    currDir = data;
-    moveDir = () => connection.write('Move: down');
-    move();
+  if (data === MOVE_DOWN_KEY) {
+    handleDirChange(data, 'w', 'Move: down');
   }
-  if (data === 'd') {
-    if (data === currDir || currDir === 'a') return;
-    currDir = data;
-    moveDir = () => connection.write('Move: right');
-    move();
+  if (data === MOVE_RIGHT_KEY) {
+    handleDirChange(data, 'a', 'Move: right');
   }
 
   if (data === 'h') connection.write('Say: watch out!');
-  if (data === 'j') connection.write("Say: comin' thru!");
+  if (data === 'j') connection.write("Say: Aaron comin' thru!");
   if (data === 'k') connection.write('Say: wah wah');
   if (data === 'l') connection.write('Say: who dis');
-  if (data === 'y') connection.write('Say: nice move!');
+  if (data === 'b') connection.write('Say: nice move!');
+  if (data === 'n') connection.write('Say: too slow');
+  if (data === 'm') connection.write('Say: catch me if you can!');
+  if (data === 'y') connection.write('Say: Hi Amrinder!');
+  if (data === 'u') connection.write('Say: Hi Anim!');
+  if (data === 'i') connection.write('Say: Hi Lily!');
+  if (data === 'o') connection.write('Say: Hi Jasjot!');
 
   if (Number(data) >= 1 && Number(data) <= 9) move(Number(data));
 
