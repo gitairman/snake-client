@@ -1,6 +1,6 @@
 // Stores the active TCP connection object.
 let connection;
-let intervalId;
+let intervalId = null;
 let moveDir;
 let speed = 1;
 
@@ -8,27 +8,27 @@ const handleUserInput = function (data) {
   console.log(data, '\r');
 
   const move = (newSpeed = speed) => {
-    if (intervalId !== undefined && speed === newSpeed) return;
-    if (intervalId !== undefined) clearInterval(intervalId);
+    if (intervalId !== null && speed === newSpeed) return;
+    if (intervalId !== null) clearInterval(intervalId);
     if (speed !== newSpeed) speed = newSpeed;
 
     const delay = Math.floor(200 / speed);
     intervalId = setInterval(() => moveDir(), delay);
   };
 
-  if (data === '\u0077') {
+  if (data === 'w') {
     moveDir = () => connection.write('Move: up');
     move();
   } // w
-  if (data === '\u0061') {
+  if (data === 'a') {
     moveDir = () => connection.write('Move: left');
     move();
   } // a
-  if (data === '\u0073') {
+  if (data === 's') {
     moveDir = () => connection.write('Move: down');
     move();
   } // s
-  if (data === '\u0064') {
+  if (data === 'd') {
     moveDir = () => connection.write('Move: right');
     move();
   }
