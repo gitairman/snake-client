@@ -20,17 +20,17 @@ const actions = {
 };
 
 const msgs = {
-  h: 'Say: watch out!',
-  j: "Say: choo choo aaron comin' thru!",
-  k: 'Say: wah wah',
-  l: 'Say: who dis?',
-  y: 'Say: hi Amrinder!',
-  u: 'Say: hi Anim!',
-  i: 'Say: hi Lily!',
-  o: 'Say: hi Jasjot!',
-  b: 'Say: nice move!',
-  n: 'Say: too slow',
-  m: 'Say: catch me if you can!',
+  h: 'watch out!',
+  j: "choo choo aaron comin' thru!",
+  k: 'wah wah',
+  l: 'who dis?',
+  y: 'hi Amrinder!',
+  u: 'hi Anim!',
+  i: 'hi Lily!',
+  o: 'hi Jasjot!',
+  b: 'nice move!',
+  n: 'too slow',
+  m: 'catch me if you can!',
 };
 
 const handleDirChange = (newDir, oppDir, command) => {
@@ -55,7 +55,7 @@ const handleUserInput = function (data) {
   // change direction or start moving
   if (actions[data]) actions[data](data);
   // write a message
-  if (msgs[data]) connection.write(msgs[data]);
+  if (msgs[data]) connection.write('Say: ' + msgs[data]);
   // change speed
   if (Number(data) >= 1 && Number(data) <= 9) move(Number(data));
 
