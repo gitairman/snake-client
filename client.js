@@ -21,7 +21,7 @@ const connect = function () {
 
   conn.on('data', (data) => {
     console.log('Server says: ', data);
-    if (data.includes('ded')) process.exit();
+    if (data.includes('ded') || data.includes('dead')) process.exit();
   });
 
   return conn;

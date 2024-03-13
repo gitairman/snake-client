@@ -59,7 +59,11 @@ const handleUserInput = function (data) {
   // change speed
   if (Number(data) >= 1 && Number(data) <= 9) move(Number(data));
 
-  if (data === '\u0003') process.exit();
+  // exit the program
+  if (data === '\u0003') {
+    clearInterval(intervalId);
+    process.exit();
+  }
 };
 
 // setup interface to handle user input from stdin
