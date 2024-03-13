@@ -12,6 +12,27 @@ let moveDir;
 let speed = 1;
 let currDir = null;
 
+const actions = {
+  [MOVE_UP_KEY]: (data) => handleDirChange(data, 's', 'Move: up'),
+  [MOVE_DOWN_KEY]: (data) => handleDirChange(data, 'w', 'Move: down'),
+  [MOVE_LEFT_KEY]: (data) => handleDirChange(data, 'd', 'Move: left'),
+  [MOVE_RIGHT_KEY]: (data) => handleDirChange(data, 'a', 'Move: right'),
+};
+
+const msgs = {
+  h: 'Say: watch out!',
+  j: "Say: choo choo aaron comin' thru!",
+  k: 'Say: wah wah',
+  l: 'Say: who dis?',
+  y: 'Say: hi Amrinder!',
+  u: 'Say: hi Anim!',
+  i: 'Say: hi Lily!',
+  o: 'Say: hi Jasjot!',
+  b: 'Say: nice move!',
+  n: 'Say: too slow',
+  m: 'Say: catch me if you can!',
+};
+
 const handleDirChange = (newDir, oppDir, command) => {
   if (newDir === currDir || currDir === oppDir) return;
   currDir = newDir;
@@ -31,30 +52,9 @@ const move = (newSpeed = speed) => {
 const handleUserInput = function (data) {
   console.log(data, '\r');
 
-  if (data === MOVE_UP_KEY) {
-    handleDirChange(data, 's', 'Move: up');
-  }
-  if (data === MOVE_LEFT_KEY) {
-    handleDirChange(data, 'd', 'Move: left');
-  }
-  if (data === MOVE_DOWN_KEY) {
-    handleDirChange(data, 'w', 'Move: down');
-  }
-  if (data === MOVE_RIGHT_KEY) {
-    handleDirChange(data, 'a', 'Move: right');
-  }
+  if (actions[data]) actions[data](data);
 
-  if (data === 'h') connection.write('Say: watch out!');
-  if (data === 'j') connection.write("Say: Aaron comin' thru!");
-  if (data === 'k') connection.write('Say: wah wah');
-  if (data === 'l') connection.write('Say: who dis');
-  if (data === 'b') connection.write('Say: nice move!');
-  if (data === 'n') connection.write('Say: too slow');
-  if (data === 'm') connection.write('Say: catch me if you can!');
-  if (data === 'y') connection.write('Say: Hi Amrinder!');
-  if (data === 'u') connection.write('Say: Hi Anim!');
-  if (data === 'i') connection.write('Say: Hi Lily!');
-  if (data === 'o') connection.write('Say: Hi Jasjot!');
+  if (msgs[data]) connection.write(msgs[data]);
 
   if (Number(data) >= 1 && Number(data) <= 9) move(Number(data));
 
