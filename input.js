@@ -22,26 +22,31 @@ const handleUserInput = function (data) {
     currDir = data;
     moveDir = () => connection.write('Move: up');
     move();
-  } // w
+  }
   if (data === 'a') {
     if (data === currDir || currDir === 'd') return;
     currDir = data;
     moveDir = () => connection.write('Move: left');
     move();
-  } // a
+  }
   if (data === 's') {
     if (data === currDir || currDir === 'w') return;
     currDir = data;
     moveDir = () => connection.write('Move: down');
     move();
-  } // s
+  }
   if (data === 'd') {
     if (data === currDir || currDir === 'a') return;
     currDir = data;
     moveDir = () => connection.write('Move: right');
     move();
   }
-  // d
+
+  if (data === 'h') connection.write('Say: watch out!');
+  if (data === 'j') connection.write("Say: comin' thru!");
+  if (data === 'k') connection.write('Say: wah wah');
+  if (data === 'l') connection.write('Say: who dis');
+  if (data === 'y') connection.write('Say: nice move!');
 
   if (Number(data) >= 1 && Number(data) <= 9) move(Number(data));
 
