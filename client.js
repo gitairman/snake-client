@@ -15,12 +15,13 @@ const connect = function () {
     conn.write('Name: AEH');
   });
   conn.on('connect', () => {
-    // setInterval(() => {
-    // conn.write('Move: up');
-    // }, 100);
+    console.log('Start playing!');
   });
 
-  conn.on('data', (data) => console.log('Server says: ', data));
+  conn.on('data', (data) => {
+    console.log('Server says: ', data);
+    if (data.includes('ded')) process.exit();
+  });
 
   return conn;
 };
