@@ -52,10 +52,11 @@ const move = (newSpeed = speed) => {
 const handleUserInput = function (data) {
   console.log(data, '\r');
 
+  // change direction or start moving
   if (actions[data]) actions[data](data);
-
+  // write a message
   if (msgs[data]) connection.write(msgs[data]);
-
+  // change speed
   if (Number(data) >= 1 && Number(data) <= 9) move(Number(data));
 
   if (data === '\u0003') process.exit();
