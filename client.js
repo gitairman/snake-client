@@ -14,6 +14,11 @@ const connect = function () {
     console.log(`Connected to server!`);
     conn.write('Name: AEH');
   });
+  conn.on('connect', () => {
+    // setInterval(() => {
+    // conn.write('Move: up');
+    // }, 100);
+  });
 
   conn.on('data', (data) => console.log('Server says: ', data));
 
